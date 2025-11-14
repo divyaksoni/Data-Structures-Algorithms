@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++)
+            sum += nums[i];
+
+        if (sum % 2 != 0)
+            return false;
+
+        // if we are able to partition the array into two then both the
+        // partition will have sum equals to sum/2. so breaking this problem
+        // into its parent problem "Subset Sum Problem" we need to find if there
+        // exists a subset with sum equals sum/2
+
+        // Memoization
+        vector<vector<int>> dp(n + 1, vector<int>(sum + 1, -1));
+        return helper(nums, sum / 2, n, dp);
+    }
+
+    // Memoization
+    // Note for myself: pass dp array by refernce
+
+    bool helper(vector<int>& nums, int sum, int n, vector<vector<int>>& dp) {
+        // base case
+        if (n == 0 && sum != 0)
+            return false;
+        if (sum == 0)
+            return true;
+
+        if (dp[n][sum] != -1)
+            return dp[n][sum];
+
+        // reccurance
+
+        int not_pick = helper(nums, sum, n - 1, dp);
+
+        int pick = false;
+        if (nums[n - 1] <= sum)
+            pick = helper(nums, sum - nums[n - 1], n - 1, dp);
+
+        return dp[n][sum] = not_pick || pick;
+    }
+};
