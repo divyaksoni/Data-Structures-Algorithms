@@ -1,0 +1,52 @@
+class Solution {
+  public:
+    int perfectSum(vector<int>& arr, int target) 
+    {   
+        int n=arr.size();
+        
+        // Recursion
+        // return helper(arr, n, target);
+        
+        // Memoization
+        vector<vector<int>>dp(n+1, vector<int>(target+1, -1));
+        return helper(arr, n, target, dp);
+    }
+    
+    // Recursion
+    
+    // int helper(vector<int>& arr, int n, int target)
+    // {
+    //     //base
+    //     if(n==0 && target==0)   return 1;
+    //     if(n==0 && target!=0)   return 0;
+        
+    //     //reccurance
+    //     int not_pick = helper(arr, n-1, target);
+        
+    //     int pick = 0;
+    //     if(arr[n-1] <= target)
+    //         pick = helper(arr, n-1, target - arr[n-1]);
+        
+    //     return not_pick + pick;
+    // }
+    
+    // Memoization
+    
+    int helper(vector<int>& arr, int n, int target, vector<vector<int>>&dp)
+    {
+        //base
+        if(n==0 && target==0)   return 1;
+        if(n==0 && target!=0)   return 0;
+        
+        if(dp[n][target]!=-1)   return dp[n][target];
+        
+        //reccurance
+        int not_pick = helper(arr, n-1, target, dp);
+        
+        int pick = 0;
+        if(arr[n-1] <= target)
+            pick = helper(arr, n-1, target - arr[n-1], dp);
+        
+        return dp[n][target] = not_pick + pick;
+    }
+};
