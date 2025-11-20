@@ -1,0 +1,44 @@
+class Solution {
+  public:
+    void sortStack(stack<int> &st) 
+    {
+        //base case
+        if(st.empty())
+            return;
+            
+        //step1: remove the top element
+        int top_el=st.top();
+        st.pop();
+        
+        //step2: after removal sort the remaining stack (the smaller instance of the problem)
+        sortStack(st);
+        
+        //step3: insert the top element at it correct position
+        insertAtCorrectPos(st, top_el);
+        return;
+    }
+    
+    void insertAtCorrectPos(stack<int>&st, int top_el)
+    {
+        //base case
+        if(st.empty())
+        {
+            st.push(top_el);
+            return;
+        }
+        if(top_el>=st.top())
+        {
+            st.push(top_el);
+            return;
+        }
+        
+        //remove the top most le and store in temp as temp will be later inserted
+        int temp = st.top();
+        st.pop();
+        
+        insertAtCorrectPos(st, top_el);
+        
+        st.push(temp);
+        return;
+    }
+};
