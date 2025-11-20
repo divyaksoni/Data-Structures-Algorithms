@@ -1,0 +1,41 @@
+class Solution {
+  public:
+    void reverseStack(stack<int> &s) 
+    {
+        //base case
+        if(s.empty())
+            return;
+        
+        //step1: remove top
+        int top_el = s.top();
+        s.pop();
+        
+        //step2: reverse the smaller instance of the stack after removal
+        reverseStack(s);
+        
+        //step3: insert the top element at bottom
+        insertAtBottom(s, top_el);
+        return;
+    }
+   
+    void insertAtBottom(stack<int>&s, int top_el)
+    {
+        //base case
+        if(s.empty())
+        {
+            s.push(top_el);
+            return;
+        }
+        
+        //emptying stack one by one
+        int temp=s.top();
+        s.pop();
+        
+        //insert the topmost el at bottom
+        insertAtBottom(s,top_el);
+        
+        //again push the removed el while emptying
+        s.push(temp);
+        return;
+    }
+};
