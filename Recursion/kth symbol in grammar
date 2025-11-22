@@ -1,0 +1,65 @@
+class Solution {
+public:
+
+    //hypothesis (recursive function definiton)
+    int kthGrammar(int n, int k)
+    {
+        //base case
+        if(n==1)
+            return 0;
+
+        //reccurance (induction)
+        // int mid = pow(2,n-1)/2;
+        //better practice to calculate mid by left shift operation 
+        //pow() is a doble - floating-point math function, it may give decimal rounding errors
+        int mid = 1<<(n-2);
+
+        //k lies in first half and the indexing (k) will be the same as of n-1 th row
+        if(k<=mid)
+            return kthGrammar(n-1, k);
+        //k lies in second half and the indexing (k) will become k-mid in n-1 th row
+        //and the values are exactly complement of n-1th row
+        else
+            return !(kthGrammar(n-1, k-mid));
+    }   
+    
+    //wrong thought process
+    
+    // int kthGrammar(int n, int k) 
+    // {
+    //     //finding the nth sequeunce of 0's and 1's
+    //     string temp_ans = "";
+    //     string s = nthSequence(n, temp_ans);
+
+    //     //now finding the kth symbol of the nth sequence
+    //     if(s[k-1]=='0')     return 0;
+    //     else                return 1;
+    // }
+
+    // string nthSequence(int n, string &temp_ans)
+    // {
+    //     //base case (1st sequence is "0")
+    //     if(n==1)
+    //     {
+    //         return "0";
+    //     }
+
+    //     string ans = nthSequence(n-1, temp_ans);
+
+    //     //changing each 0 with 01 and each 1 with 10 for the n-1 the sequence
+    //     for(int i=0;i<ans.size();i++)
+    //     {
+    //         if(ans[i]=='0')
+    //         {
+    //             temp_ans.push_back('0');
+    //             temp_ans.push_back('1');
+    //         }
+    //         else
+    //         {
+    //             temp_ans.push_back('1');
+    //             temp_ans.push_back('0');
+    //         }
+    //     }
+    //     return temp_ans;
+    // }
+};
