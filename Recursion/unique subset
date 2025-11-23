@@ -1,0 +1,73 @@
+class Solution {
+public:
+    // vector<vector<int>> subsetsWithDup(vector<int>& nums) 
+    // {
+    //     int n=nums.size();
+        
+    //     vector<vector<int>>solution;
+    //     vector<int>ans;
+    //     set<vector<int>> sett;
+    //     findPowerSet(0, nums, ans, solution, sett);
+    //     return solution;
+    // }
+
+    // void findPowerSet(int i, vector<int>& nums, vector<int> &ans, vector<vector<int>>&solution, set<vector<int>>&sett)
+    // {
+    //     //base
+    //     if(i==nums.size())
+    //     {
+    //         vector<int>temp(ans);
+    //         sort(temp.begin(), temp.end());
+    //         if(sett.find(temp)==sett.end())
+    //         {
+    //             solution.push_back(temp);
+    //             sett.insert(temp);
+    //         }
+    //         return;
+    //     }
+    //     //reccurance
+        
+    //     //take the ith element
+    //     ans.push_back(nums[i]);
+    //     findPowerSet(i+1, nums, ans, solution,sett);
+        
+    //     ans.pop_back();
+    //     //not take the element
+    //     findPowerSet(i+1, nums, ans, solution,sett);
+    // }
+
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) 
+    {
+        int n=nums.size();
+        sort(nums.begin(), nums.end());
+        vector<vector<int>>solution;
+        vector<int>ans;
+        set<vector<int>> sett;
+        findPowerSet(0, nums, ans, solution, sett);
+        return solution;
+    }
+
+    void findPowerSet(int i, vector<int>& nums, vector<int> &ans, vector<vector<int>>&solution, set<vector<int>>&sett)
+    {
+        //base
+        if(i==nums.size())
+        {
+            sort(ans.begin(), ans.end());
+            if(sett.find(ans)==sett.end())
+            {
+                solution.push_back(ans);
+                sett.insert(ans);
+            }
+            return;
+        }
+        //reccurance
+        
+        //take the ith element
+        ans.push_back(nums[i]);
+        findPowerSet(i+1, nums, ans, solution,sett);
+        
+        ans.pop_back();
+        //not take the element
+        findPowerSet(i+1, nums, ans, solution,sett);
+    }
+};
